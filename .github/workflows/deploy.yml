@@ -1,0 +1,55 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Redis for use in testing
+      uses: shogo82148/actions-setup-redis@v1
+      with:
+        redis-version: '5.x'
+    - name: Redis ping
+      run: redis-cli ping
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        venv/bin/pip install --upgrade pip
+        venv/bin/pip install -r requirements.txt
+    - name: Lint and test
+      run: |
+        venv/bin/flake8 . --exclude venv
+        venv/bin/pytest
+    - name: Deploy the build
+      id: deploy
+      uses: Pendect/action-rsyncer@v1.1.0
+      env:
+        DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
+      with:
+        flags: '-avzr --delete'
+        options: ''
+        ssh_options: ''
+        src: 'sample.ini default_config.py wsgi.py sample requirements.txt'
+        dest: ${{ secrets.DEPLOY_DESTINATION }}
+    - name: Display status from deploy
+      run: echo "${{ steps.deploy.outputs.status }}"
+    - name: Restart the app
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USERNAME }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        script: |
+            python3 -m venv venv
+            venv/bin/pip install --upgrade pip
+            venv/bin/pip install -r requirements.txt
+            sudo /bin/systemctl restart sample.service

@@ -8,29 +8,29 @@ A sample repo demonstrating the steps outlined in [this documentation](https://d
 ### Setup
 
 ```
-  python3 -m venv venv
-  . venv/bin/activate
-  pip install -r requirements.txt
+python3 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
 ```
 
 Make sure redis is installed
 
 ```
-  wget http://download.redis.io/redis-stable.tar.gz
-  tar xvzf redis-stable.tar.gz
-  cd redis-stable
-  make
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+make
 ```
 
 ### Run
 
 ```
-  redis-server
+redis-server
 ```
 
 ```
-  . venv/bin/activate
-  FLASK_APP=sample FLASK_ENV=development flask run
+. venv/bin/activate
+FLASK_APP=sample FLASK_ENV=development flask run
 ```
 
 ### Deployment

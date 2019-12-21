@@ -48,9 +48,4 @@ jobs:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ${{ secrets.DEPLOY_USERNAME }}
         key: ${{ secrets.DEPLOY_KEY }}
-        script: |
-          cd /var/app/sample/
-          python3 -m venv venv
-          venv/bin/pip install --upgrade pip
-          venv/bin/pip install -r requirements.txt
-          sudo /bin/systemctl restart sample.service
+        script: cd /var/app/sample/ && python3 -m venv venv && venv/bin/pip install --upgrade pip && venv/bin/pip install -r requirements.txt && sudo /bin/systemctl restart sample.service

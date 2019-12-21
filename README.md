@@ -1,4 +1,4 @@
-![deploy status](https://github.com/jpmunz/decidel-flask/workflows/Build%20and%20Deploy/badge.svg)
+![deploy status](https://github.com/jpmunz/sample-rest-api/workflows/Build%20and%20Deploy/badge.svg)
 ![code style: black](https://img.shields.io/badge/code_style-black-000000.svg?style=plastic")
 
 A sample repo demonstrating the steps outlined in [this documentation](https://development-recipes.readthedocs.io/en/latest/rest-api.html).

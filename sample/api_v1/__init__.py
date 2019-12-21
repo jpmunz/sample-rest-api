@@ -1,1 +1,1 @@
-from .endpoints import blueprint
+from .endpoints import blueprint  # noqa: F401

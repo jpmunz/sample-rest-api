@@ -27,7 +27,7 @@ jobs:
         venv/bin/pip install -r requirements.txt
     - name: Lint and test
       run: |
-        venv/bin/flake8 . --exclude venv
+        venv/bin/flake8 . --exclude venv,migrations
         venv/bin/pytest
     - name: Deploy the build
       id: deploy
